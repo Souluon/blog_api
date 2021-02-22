@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+{% for post in posts %}
+<div class="card">
+    <div class="card-body">
+  <h5 class="card-title">{{ post.title }}</h5>
+      <a href="{% url 'api:postdetail' post_id=post.id %}" class="btn btn-dark">Detail</a>
+      <a href="{% url 'api:deletepost' post_id=post.id %}" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% for tag in tags %}
+<div class="card">
+    <div class="card-body">
+  <a href="http://127.0.0.1:8000/api/tag_post_html{{tag.id}}" target="blank"  class="card-title">{{ tag.name }}</a>
+  <a href="{% url 'api:deletetag' tag_id=tag.id %}" class="btn btn-danger">Delete</a>
+  <h5 class="card-body">{{ tag.id }}</h5>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}
