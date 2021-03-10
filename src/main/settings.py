@@ -25,8 +25,22 @@ SECRET_KEY = 'i34e-&937jve9nblqhms&(i^6cb5%-%coz&te%1-()ngkuwv=g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
+AUTH_USER_MODEL = 'authe.Author'
+
+EMAIL_FROM = 'tosmonaliev8@gmail.com'
+EMAIL_BCC = 'Qualle'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tosmonaliev8@gmail.com'
+EMAIL_HOST_PASSWORD = 'qawsedrftg1303'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+SERVER_EMAIL = 'tosmonaliev8@gmail.com'
 
 # Application definition
 
@@ -39,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     'rest_framework',
+    'authe',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +92,12 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'blog',
+        'USER': 'timur',
+        'PASSWORD': 'Timaskill1',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
