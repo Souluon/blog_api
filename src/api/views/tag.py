@@ -37,11 +37,11 @@ class TagCreateView(CreateAPIView):
 
 def tags_detail(request):
     tags = Tag.objects.all()
-    return render(request, 'main/tags.html', {'tags': tags})
+    return render(request, 'tags.html', {'tags': tags})
 
 def tag_post_html(request, tag_id):
     posts=Post.objects.filter(tags__id=tag_id)
-    return render(request, 'main/index.html', {'posts':posts})
+    return render(request, 'index.html', {'posts':posts})
 
 def createtag(request):
     error = ''
@@ -58,7 +58,7 @@ def createtag(request):
         'form': form,
         'error': error
     }
-    return render(request, 'main/createtag.html', context)
+    return render(request, 'createtag.html', context)
 
 def deletetag(request, tag_id):
     tag = Tag.objects.filter(id = tag_id).delete()

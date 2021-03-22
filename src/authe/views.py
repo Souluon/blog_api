@@ -1,8 +1,11 @@
-from django.shortcuts import render
-from .forms import AuthorForm
+from django.shortcuts import render, redirect
+from .forms import AuthorForm, LoginForm
 from .models import Author, ConfirmCode
 from .utils import send_code_mail
 from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
 # Create your views here.
 
 def register(request):
@@ -16,7 +19,7 @@ def register(request):
             code= ConfirmCode.objects.create(author=author)
             send_code_mail(author.email,code.code)
             message = "Все ок"
-            return render(request,'main/reply.html',{"message":message}) 
+            return render(request,'reply.html',{"message":message}) 
         elif Author.objects.filter(username = request.POST['username'], verified=False) or Author.objects.filter(email=request.POST['email'], verified=False):
             author = None
             if Author.objects.filter(email = request.POST['email']): 
@@ -27,10 +30,10 @@ def register(request):
                 code= ConfirmCode.objects.create(author=author)
                 send_code_mail(author.email,code.code)
             message = 'Такой пользователь уже существует' 
-            return render(request, 'main/reply.html', {'message':message})    
+            return render(request, 'reply.html', {'message':message})    
         message=save_form.errors
-        return render(request,'main/reply.html',{"message":message})    
-    return render(request,'main/register.html',{'form':form})
+        return render(request,'reply.html',{"message":message})    
+    return render(request,'register.html',{'form':form})
 
 def confirm_email(request, code):
     code = ConfirmCode.objects.filter(code = code)
@@ -42,4 +45,19 @@ def confirm_email(request, code):
             code.last().author.verified = True
             code.last().author.save()
             message = 'Your email confirmed!'
-    return render(request, 'main/reply.html', {'message': message})
+    return render(request, 'reply.html', {'message': message})
+
+def login(request):
+    form = LoginForm()
+    if request.method == 'POST':
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user:
+            auth_login(request, user)
+            return render(request, 'reply.html', {'message': 'Вы зашли', 'success': True})
+        return render(request, 'reply.html', {'message': 'Такой пользователь не найден', 'succes':False})
+    return render(request, 'login.html', {'form':form})
+
+def logout_view(request):
+    print(request.user)
+    logout(request)
+    return redirect('api:home')

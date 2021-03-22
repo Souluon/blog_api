@@ -15,6 +15,8 @@ urlpatterns = [
     path('create', create, name='create'),
     path('create2', PostCreateView.as_view()),
     path('createtag', TagCreateView.as_view()),
+    
+    
 
 
     path('postform/<int:post_id>', post_detail, name="postdetail"),

@@ -36,5 +36,5 @@ class PostCreateView(CreateAPIView):
 
 def post_detail(request, post_id):
     post = Post.objects.get(id = post_id)
-    return render(request, 'main/post_details.html', {'post': post})
+    return render(request, 'post_details.html', {'post': post})
 

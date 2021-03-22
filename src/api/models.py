@@ -1,5 +1,5 @@
 from django.db import models
-
+from authe.models import Author
 # Create your models here.
 
 class Tag(models.Model):
@@ -15,7 +15,7 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length = 100, verbose_name = 'Заголовок')
     body = models.TextField(max_length = 1000, verbose_name = 'Описание')
-
+    author = models.ForeignKey(Author, related_name = 'posts', on_delete = models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name = 'posts', verbose_name = 'Тэги')
     def __str__(self):
         return f"{self.title}"
